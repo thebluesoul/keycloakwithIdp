@@ -58,3 +58,11 @@ keycloak_mysql   docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp
 my-app           /bin/sh /usr/bin/entrypoint.sh   Up      0.0.0.0:3000->3000/tcp,:::3000->3000/tcp           
 #
 ```
+
+* 서비스 확인
+```
+    Node.js 앱: http://localhost:3000
+    Keycloak 관리 콘솔: http://localhost:8080
+    MySQL 데이터베이스: localhost:3306
+
+```
