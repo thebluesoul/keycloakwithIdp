@@ -1,0 +1,14 @@
+{
+    "name": "keycloak-app",
+    "version": "1.0.0",
+    "description": "Node.js app with Keycloak",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "^4.21.1",
+        "express-session": "^1.17.3",
+        "keycloak-connect": "^16.1.1"
+    }
+}

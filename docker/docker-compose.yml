@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: keycloak_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: KEYCLOAKDB
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: keycloakpassword
+    ports:
+      - "3306:3306/tcp"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../docker/mysql/conf/my.cnf:/etc/mysql/my.cnf
+      - ../docker/mysql/conf:/docker-entrypoint-initdb.d
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://mysql:3306/KEYCLOAKDB
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloakpassword
+    depends_on:
+      - mysql
+    command: start-dev
+
+  app:
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile
+    container_name: my-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - keycloak
+      - mysql
+    volumes:
+      - ../src:/app/src
+      - ../docker/app/bin/entrypoint.sh:/usr/bin/entrypoint.sh
+    entrypoint: ["/bin/sh", "/usr/bin/entrypoint.sh"]
+
+volumes:
+  mysql_data:
