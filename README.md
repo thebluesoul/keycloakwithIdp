@@ -15,6 +15,10 @@
   # 도커이미지 생성(캐쉬무시)
   docker-compose build --no-cache
 
+  # HTTPS를 위한 인증서 생성
+  cd keycloakiwthIdp/docker
+  ./gen-cert.sh
+
   # 도커컴포즈를 통해서 컨테이너 실행
   docker-compose up -d
 ```
