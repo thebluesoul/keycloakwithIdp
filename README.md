@@ -17,10 +17,20 @@
 
   # HTTPS를 위한 인증서 생성
   cd keycloakiwthIdp/docker
-  ./gen-cert.sh
+  ./certpro.sh gen
 
   # 도커컴포즈를 통해서 컨테이너 실행
   docker-compose up -d
+
+  # 인증서 생성 및 P12파일 가져오기
+  $ ./certpro.sh 
+    Usage: ./certpro.sh [command] [options]
+
+    [command]
+      gen
+      extrac [filepath] [pre shared secretkey]
+             [filepath] : P12 (or PFX) file location
+             [pre shared secretkey] : Password used during P12 file creation
 ```
 * 실행로그
 ```
