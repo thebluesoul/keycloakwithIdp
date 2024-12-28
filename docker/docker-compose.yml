@@ -39,22 +39,5 @@ services:
     depends_on:
       - mysql
 
-  app:
-    build:
-      context: ../
-      dockerfile: docker/app/Dockerfile
-    container_name: my-app
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
-    depends_on:
-      - keycloak
-      - mysql
-    volumes:
-      - ../src:/app/src
-      - ../docker/app/bin/entrypoint.sh:/usr/bin/entrypoint.sh
-    entrypoint: ["/bin/sh", "/usr/bin/entrypoint.sh"]
-
 volumes:
   mysql_data:
